@@ -17,7 +17,6 @@ def listen_for_key():
             continue
 
 
-# 模拟程序运行中的阻塞
 def perform_task():
     print("任务开始，等待解除阻塞...")
     block_event.wait()  # 阻塞，等待解除
@@ -34,7 +33,7 @@ def perform_task():
     pyautogui.click(2515, 1095)  # 点击确认键
     time.sleep(0.15)  # 等待一下
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
-    #pyautogui.click(63, 145)  # 点击抢场小程序返回键，弃用，原因是会显示没找到预约时间，这个时候点返回可能会不起作用
+    # pyautogui.click(63, 145)  # 点击抢场小程序返回键，弃用，原因是会显示没找到预约时间，这个时候点返回可能会不起作用
     '''这里就需要手动操作一下，选择需要抢的场，然后等圈转完（也就是加载完，再按c键）'''
     block_event.clear()  # 重置阻塞事件
     block_event.wait()  # 阻塞，等待解除
@@ -46,11 +45,10 @@ def perform_task():
     time.sleep(0.15)  # 等待一下
     # pyautogui.click(133, 624)  # 8-8:30
     # pyautogui.click(900, 622)  # 9:30-10
-    # pyautogui.click(1155, 624)  # 10-10:30
-    # pyautogui.click(1925, 624)  # 11:30-12
-    pyautogui.click(1424, 715)  # 15-15:30
-    pyautogui.click(2174, 720)  # 16:30-17
-
+    pyautogui.click(1155, 624)  # 10-10:30
+    pyautogui.click(1925, 624)  # 11:30-12
+    # pyautogui.click(1424, 715)  # 15-15:30
+    # pyautogui.click(2174, 720)  # 16:30-17
 
     # 下面的固定不改
     pyautogui.click(215, 1192)  # 点击使用人数框

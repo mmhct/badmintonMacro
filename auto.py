@@ -43,7 +43,7 @@ def perform_task():
 
 
 if __name__ == "__main__":
-    set_time = datetime.datetime.strptime("2024-12-06 21:01:50", "%Y-%m-%d %H:%M:%S")
+    set_time = datetime.datetime.strptime("2024-12-09 20:00:01", "%Y-%m-%d %H:%M:%S")
     time_difference = (set_time - datetime.datetime.now()).total_seconds()
     while time_difference > 0:
         if time_difference > 10:
