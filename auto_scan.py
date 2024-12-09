@@ -3,6 +3,10 @@ import time
 import cv2
 import numpy as np
 from PIL import ImageGrab
+import pyautogui
+import keyboard
+import threading
+import time
 
 
 def screen_capture():
@@ -15,10 +19,10 @@ def screen_capture():
 
 
 def split_image(image):
-    # 获取图像的高度和宽度
-    h, w, _ = image.shape
-    print(image.shape)
-    # 计算每个块的高度和宽度
+    # 获取图像的高度和宽度(测试用)
+    # h, w, _ = image.shape
+    # print(image.shape)
+
     blocks = {}
     blocks[0] = image[597:652, 40:254]  # 8:00-8:30
     blocks[1] = image[597:652, 305:519]  # 8:30-9:00
@@ -67,17 +71,18 @@ def detect_color(block, target_color, threshold=10):
     return np.any(diff_sum < threshold)
 
 
-if __name__ == "__main__":
-    # 截取屏幕
+def run():
     start = time.time()
     screen = screen_capture()
-    # 将屏幕截图分成4行4列的块
+    # 将屏幕截图分成约场时间的块
     blocks = split_image(screen)
     # 指定要检测的颜色 (B, G, R)
-    target_color = (191, 187, 187)  # 灰色
+    target_color = (191, 187, 187)  # 灰色，识别完全准确
+    # target_color = (179, 179, 45)  # 浅蓝色,这个好像不对，用不起
     detection_results = {}
     for block_id, block in blocks.items():
         detection_results[block_id] = detect_color(block, target_color)
+    print(detection_results)
     end = time.time()
     print(f"Time elapsed: {end - start}")
-    print(detection_results)
+    return detection_results
