@@ -29,7 +29,7 @@ def perform_task():
 
     '''下面这部分就是抢实际的场了，程序会自动识别可抢的场地，并按照自定义优先规则进行选择'''
     # TODO: 根据position.txt里的坐标进行修改
-    time.sleep(0.2)  # 等待一下
+    time.sleep(0.18)  # 等待一下
     detection_results = run()
     detection_results = {key: not value for key, value in detection_results.items()}
     if detection_results[14] and detection_results[17]:
@@ -38,10 +38,26 @@ def perform_task():
     elif detection_results[15] and detection_results[18]:
         pyautogui.click(1667, 724)  # 15:30-16
         pyautogui.click(147, 816)  # 17-17:30
+    elif detection_results[16] and detection_results[19]:
+        pyautogui.click(1926, 722)  # 16-16:30
+        pyautogui.click(408, 815)  # 17:30-18
+    elif detection_results[12] and detection_results[15]:
+        pyautogui.click(905, 722)  # 14-14:30
+        pyautogui.click(1667, 724)  # 15:30-16
+    elif detection_results[13] and detection_results[16]:
+        pyautogui.click(1164, 721)  # 14:30-15
+        pyautogui.click(1926, 722)  # 16-16:30
+    elif detection_results[3] and detection_results[6]:
+        pyautogui.click(900, 622)  # 9:30-10
+        pyautogui.click(1657, 627)  # 11-11:30
+    # 更多自定义规则可以在这里添加
     # pyautogui.click(133, 624)  # 8-8:30
     # pyautogui.click(900, 622)  # 9:30-10
     # pyautogui.click(1155, 624)  # 10-10:30
     # pyautogui.click(1925, 624)  # 11:30-12
+    else:  # 啥也没剩，我打早八
+        pyautogui.click(133, 624)  # 8-8:30
+        pyautogui.click(900, 622)  # 9:30-10
 
     # 下面的固定不改
     pyautogui.click(215, 1192)  # 点击使用人数框
