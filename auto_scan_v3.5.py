@@ -23,6 +23,7 @@ def perform_task(have, iter):
     elif iter == 3:
         pyautogui.click(351, 742)  # 点击3号场地
 
+    #TODO:优化方向：使用cv2识别是否处于等待响应状态
     if iter == 0:
         time.sleep(2.5)
     elif iter == 1:
