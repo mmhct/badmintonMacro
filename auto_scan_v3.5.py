@@ -11,24 +11,24 @@ def perform_task(have, iter):
     start = time.time()
     # 继续执行剩余的代码
     pyautogui.click(386, 939)  # 点击5号场地
-    # time.sleep(1.5)  # 等待一下，这里必须考虑来自服务器的延迟
+    time.sleep(1.5)  # 等待一下，这里必须考虑来自服务器的延迟(这个到底可不可以优化？)
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
     if iter == 0:
         pyautogui.click(309, 302)  # 点击1号场地
     elif iter == 1:
-        # pyautogui.click(354, 1360) # 点击7号场地
-        pyautogui.click(395, 515)  # 点击2号场地
+        pyautogui.click(354, 1360)  # 点击7号场地
+        # pyautogui.click(395, 515)  # 点击2号场地
     elif iter == 2:
         pyautogui.click(395, 515)  # 点击2号场地
     elif iter == 3:
         pyautogui.click(351, 742)  # 点击3号场地
 
     if iter == 0:
-        time.sleep(1.5)
+        time.sleep(2.5)
     elif iter == 1:
-        time.sleep(1)
+        time.sleep(1.8)
     else:
-        time.sleep(0.5)
+        time.sleep(1.5)
     # time.sleep(1.5)  # 等待一下,这里必须考虑来自服务器的延迟，保险起见设置>3秒
     pyautogui.click(2239, 518)  # 点击日期框
     pyautogui.click(1284, 1409)  # 这个是选择下一个月份，如果遇到月份更替就要做这个操作，如果没有更替做这个也没事
@@ -102,9 +102,13 @@ def perform_task(have, iter):
     # pyautogui.click(900, 622)  # 9:30-10
     # pyautogui.click(1155, 624)  # 10-10:30
     # pyautogui.click(1925, 624)  # 11:30-12
-    else:  # 啥也没剩，我打早八
+    elif (detection_results[0] and detection_results[3]) and (
+            0 not in have and 1 not in have and 2 not in have and 3 not in have):  # 啥也没剩，我打早八
         pyautogui.click(133, 624)  # 8-8:30
         pyautogui.click(900, 622)  # 9:30-10
+    else:  # 完全没场地了，执行一步后退操作
+        pyautogui.click(29, 83)  # 点击系统浏览器回退键
+        return have
 
     # 下面的固定不改
     pyautogui.click(215, 1192)  # 点击使用人数框
