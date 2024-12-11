@@ -47,7 +47,7 @@ def perform_task(have, iter):
     '''下面这部分就是抢实际的场了，程序会自动识别可抢的场地，并按照自定义优先规则进行选择，越靠后优先级越低'''
     '''v3.5 允许连续抢场，自动去重'''
     # TODO: 根据position.txt里的坐标进行修改
-    time.sleep(0.18)  # 等待一下,如果这里还要强行优化，那就识别蒙上一层黑雾的图片
+    time.sleep(0.25)  # 等待一下,如果这里还要强行优化，那就识别蒙上一层黑雾的图片
     detection_results = run_lap()
     detection_results = {key: not value for key, value in detection_results.items()}
     if (detection_results[14] and detection_results[17]) and (
@@ -148,7 +148,7 @@ def perform_task(have, iter):
 
 
 if __name__ == "__main__":
-    set_time = datetime.datetime.strptime("2024-12-11 20:00:01", "%Y-%m-%d %H:%M:%S")
+    set_time = datetime.datetime.strptime("2024-12-11 17:00:01", "%Y-%m-%d %H:%M:%S")
     time_difference = (set_time - datetime.datetime.now()).total_seconds()
     while time_difference > 0:
         if time_difference > 10:
@@ -157,5 +157,5 @@ if __name__ == "__main__":
             time.sleep(0.1)
         time_difference = (set_time - datetime.datetime.now()).total_seconds()
     have = []
-    for i in range(2):
+    for i in range(4):
         have = perform_task(have, i)  # 执行任务
