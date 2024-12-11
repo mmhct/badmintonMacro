@@ -12,6 +12,7 @@ def perform_task(have, iter):
     start = time.time()
     # 继续执行剩余的代码
     pyautogui.click(386, 939)  # 点击5号场地
+    time.sleep(0.5)
     # 使用cv2识别是否处于等待响应状态(这个到底可不可以优化？)
     while run2():
         continue
@@ -148,7 +149,7 @@ def perform_task(have, iter):
 
 
 if __name__ == "__main__":
-    set_time = datetime.datetime.strptime("2024-12-11 17:00:01", "%Y-%m-%d %H:%M:%S")
+    set_time = datetime.datetime.strptime("2024-12-11 20:05:01", "%Y-%m-%d %H:%M:%S")
     time_difference = (set_time - datetime.datetime.now()).total_seconds()
     while time_difference > 0:
         if time_difference > 10:
