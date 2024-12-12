@@ -7,18 +7,22 @@ import time
 from auto_scan_laptop import run_lap
 from scan_wait import run2
 from scan_back_fault import run_fault
+from scan_loading import run_loading
 
 
 def perform_task(have, iter):
     start = time.time()
     # 继续执行剩余的代码
     pyautogui.click(386, 939)  # 点击5号场地
-    time.sleep(0.5)
+    while run_loading():  # 加载中
+        continue
     # 使用cv2识别是否处于等待响应状态(这个到底可不可以优化？)
     while run2():
         continue
     # time.sleep(1.5)  # 等待一下，这里必须考虑来自服务器的延迟(这个到底可不可以优化？)
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
+    while run_loading():  # 加载中
+        continue
     if run_fault():  # 回退过多
         pyautogui.click(659, 708)  # 点击润扬羽毛球场
 
@@ -33,6 +37,8 @@ def perform_task(have, iter):
         pyautogui.click(351, 742)  # 点击3号场地
 
     # 使用cv2识别是否处于等待响应状态
+    while run_loading():  # 加载中
+        continue
     while run2():
         continue
     time.sleep(0.2)
@@ -134,6 +140,8 @@ def perform_task(have, iter):
     else:  # 完全没场地了，或者没落进任何规则当中，执行一步后退操作
         pyautogui.click(29, 83)  # 点击系统浏览器回退键
         # pyautogui.click(29, 83)  # 测试fault，正常运行要删掉
+        while run_loading():  # 加载中
+            continue
         if run_fault():  # 回退过多
             pyautogui.click(659, 708)  # 点击润扬羽毛球场
         return have  # 这里结束本次迭代
@@ -152,6 +160,8 @@ def perform_task(have, iter):
         continue
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
     pyautogui.click(29, 83)  # 点击系统浏览器回退键,要点两次，因为点一次是回退到场地界面，再点一次是回退到主界面
+    while run_loading():  # 加载中
+        continue
     if run_fault():  # 回退过多
         pyautogui.click(659, 708)  # 点击润扬羽毛球场
     return have
