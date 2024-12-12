@@ -32,14 +32,17 @@ def run_loading():
     # start = time.time()
     screen = screen_capture()
     # 找出屏幕截图“暂无数据”的块
-    blocks = screen[315:369, 1209:1355]  # 这个laptop也适用
+    blocks1 = screen[315:369, 1209:1355]#场馆主界面的位置，因为多了一条"请输入搜索的场馆"
+    blocks2 = screen[202:253, 1209:1355]# 进羽毛球场后的位置
     # cv2.imshow("block", blocks)
     # cv2.imwrite("block.jpg", blocks)  # 测试用
     #
     # cv2.waitKey(0)
     # 指定要检测的颜色 (B, G, R)
     target_color = (160, 157, 157)  # 浅灰色，laptop识别完全准确
-    detection_results = detect_color(blocks, target_color)
+    detection_results1 = detect_color(blocks1, target_color)
+    detection_results2 = detect_color(blocks2, target_color)
+    detection_results = detection_results1 or detection_results2
     print("load detect:", detection_results)
     # end = time.time()
     # print(f"Time elapsed: {end - start}")
@@ -47,5 +50,5 @@ def run_loading():
 
 
 # 测试用
-# time.sleep(5)
+#time.sleep(5)
 #run_loading()
