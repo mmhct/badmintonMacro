@@ -1,4 +1,4 @@
-"""基础方法汇总文件，所有auto_scan系列的文件都会用到的方法都在这里"""
+"""检测在点下预约键之后是否处于加载状态"""
 import time
 
 import cv2
@@ -33,15 +33,15 @@ def run2():
     screen = screen_capture()
     # 找出屏幕截图“加载中”显示的块
     blocks = screen[882:901, 1269:1293]  # 这个laptop也适用
-    cv2.imshow("block", blocks)
+    # cv2.imshow("block", blocks)
     # cv2.imwrite("block.jpg", blocks) 测试用
-
-    cv2.waitKey(0)
+    #
+    # cv2.waitKey(0)
     # 指定要检测的颜色 (B, G, R)
     # target_color = (84,84,88)  # 深灰色，connect显示器完美匹配
     target_color = (76, 76, 80)  # 灰色，laptop识别完全准确
     detection_results = detect_color(blocks, target_color)
-    print(detection_results)
+    print("wait detect:",detection_results)
     # end = time.time()
     # print(f"Time elapsed: {end - start}")
     return detection_results
