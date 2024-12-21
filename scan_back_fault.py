@@ -37,12 +37,12 @@ def run_fault():
     # cv2.imwrite("block.jpg", blocks) #测试用
     #
     # cv2.waitKey(0)
-    # 指定要检测的颜色 (B, G, R)
+    # 指定要检测的颜色 (R, G, B)
 
     target_color = (255, 255, 255)  # 白色，laptop识别完全准确
     detection_results = detect_color(blocks, target_color)
     detection_results = not detection_results
-    print("fault detect:", detection_results)
+    print("back_fault detect:", detection_results)
     # end = time.time()
     # print(f"Time elapsed: {end - start}")
     return detection_results

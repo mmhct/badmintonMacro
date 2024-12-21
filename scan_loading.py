@@ -38,7 +38,7 @@ def run_loading():
     # cv2.imwrite("block.jpg", blocks)  # 测试用
     #
     # cv2.waitKey(0)
-    # 指定要检测的颜色 (B, G, R)
+    # 指定要检测的颜色 (R, G, B)
     target_color = (160, 157, 157)  # 浅灰色，laptop识别完全准确
     detection_results1 = detect_color(blocks1, target_color)
     detection_results2 = detect_color(blocks2, target_color)

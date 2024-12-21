@@ -37,7 +37,7 @@ def run2():
     # cv2.imwrite("block.jpg", blocks) 测试用
     #
     # cv2.waitKey(0)
-    # 指定要检测的颜色 (B, G, R)
+    # 指定要检测的颜色 (R, G, B)
     # target_color = (84,84,88)  # 深灰色，connect显示器完美匹配
     target_color = (76, 76, 80)  # 灰色，laptop识别完全准确
     detection_results = detect_color(blocks, target_color)
