@@ -28,7 +28,7 @@ def detect_color(block, target_color, threshold=10):
     return np.any(diff_sum < threshold)
 
 
-def run_fault():
+def run_back_fault():
     # start = time.time()
     screen = screen_capture()
     # 找出屏幕截图“加载中”显示的块
@@ -49,4 +49,4 @@ def run_fault():
 
 # 测试用
 # time.sleep(5)
-# run_fault()
+# run_back_fault()

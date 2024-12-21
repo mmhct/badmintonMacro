@@ -147,12 +147,12 @@ def perform_task(have, iter):
         have.append(2)
         have.append(3)
 
-    elif (detection_results[0] and detection_results[1]) and (
-            0 not in have and 1 not in have):  # 啥也没剩，我打早八
-        pyautogui.click(146, 624)  # 8-8:30
-        pyautogui.click(407, 624)  # 8:30-9
-        have.append(0)
-        have.append(1)
+    # elif (detection_results[0] and detection_results[1]) and (
+    #         0 not in have and 1 not in have) :  # 啥也没剩，我打早八,但是这个8-9太过短暂，不适合
+    #     pyautogui.click(146, 624)  # 8-8:30
+    #     pyautogui.click(407, 624)  # 8:30-9
+    #     have.append(0)
+    #     have.append(1)
 
     else:  # 完全没场地了，或者没落进任何规则当中，执行一步后退操作
         # 可以再设计一个从22点往前找是否存在一个连续一小时的没在have里的场，如果有就订

@@ -33,10 +33,10 @@ def run_scan_fail():
     screen = screen_capture()
     # 找出屏幕截图“预约失败”红叉的块
     blocks = screen[306:390, 1229:1347]  # 红叉的位置
-    cv2.imshow("block", blocks)
-    cv2.imwrite("block.jpg", blocks)  # 测试用
-    #
-    cv2.waitKey(0)
+    # cv2.imshow("block", blocks)
+    # cv2.imwrite("block.jpg", blocks)  # 测试用
+    # #
+    # cv2.waitKey(0)
     # 指定要检测的颜色 (R, G, B)
     target_color = (236, 13, 39)  # 红色，还未调整测试
     detection_results = detect_color(blocks, target_color)
@@ -46,5 +46,5 @@ def run_scan_fail():
     return detection_results
 
 # 测试用
-time.sleep(5)
-run_scan_fail()
+# time.sleep(5)
+# run_scan_fail()
