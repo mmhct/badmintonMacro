@@ -10,11 +10,13 @@ import pyautogui
 import time
 from auto_scan_laptop import run_lap
 from scan_wait import run2
-from scan_back_fault import run_fault
+from scan_back_fault import run_back_fault
 from scan_loading import run_loading
+from scan_fail import run_scan_fail
 
 
 def perform_task(have, iter):
+    pre_have = have.copy()
     start = time.time()
     # 继续执行剩余的代码
     pyautogui.click(386, 939)  # 点击5号场地
@@ -30,7 +32,7 @@ def perform_task(have, iter):
     time.sleep(0.1)  # 等待一下，要不然有可能连‘加载中’都还没显示出来
     while run_loading():  # 加载中，检测‘暂无数据’
         continue
-    if run_fault():  # 回退过多
+    if run_back_fault():  # 回退过多
         pyautogui.click(659, 708)  # 点击润扬羽毛球场
 
     if iter == 0:
@@ -110,7 +112,7 @@ def perform_task(have, iter):
         have.append(15)
         have.append(16)
     elif (detection_results[12] and detection_results[13]) and (
-            12 not in have and 13 not in have): # 14-15一小时，仅周四用
+            12 not in have and 13 not in have):  # 14-15一小时，仅周四用
         pyautogui.click(642, 722)  # 14-14:30
         pyautogui.click(905, 721)  # 14:30-15
         have.append(12)
@@ -158,7 +160,7 @@ def perform_task(have, iter):
         # pyautogui.click(29, 83)  # 测试fault，正常运行要删掉
         while run_loading():  # 加载中
             continue
-        if run_fault():  # 回退过多
+        if run_back_fault():  # 回退过多
             pyautogui.click(659, 708)  # 点击润扬羽毛球场
         return have  # 这里结束本次迭代
 
@@ -174,11 +176,14 @@ def perform_task(have, iter):
     time.sleep(1)
     while run2():
         continue
+    time.sleep(0.1)
+    if run_scan_fail():  # 预约失败
+        have=pre_have
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
     pyautogui.click(29, 83)  # 点击系统浏览器回退键,要点两次，因为点一次是回退到场地界面，再点一次是回退到主界面
     while run_loading():  # 加载中
         continue
-    if run_fault():  # 回退过多
+    if run_back_fault():  # 回退过多
         pyautogui.click(659, 708)  # 点击润扬羽毛球场
     return have
 
