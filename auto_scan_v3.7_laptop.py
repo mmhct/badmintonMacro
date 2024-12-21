@@ -1,4 +1,8 @@
-'''在v3.5基础上增加自动识别是否处于加载状态的功能，极大提高运行效率'''
+'''在v3.6基础上继续提高了稳定性，增加了等待时间，增加了回退操作，增加了检测机制，增加了错误处理'''
+'''2024/12/20 该版本实际测试成功 
+All you need to do is to open the Wecom, set your favorite choices and time, run this script, 
+and it will automatically scan the badminton courts for you.
+'''
 
 import datetime
 
@@ -14,19 +18,23 @@ def perform_task(have, iter):
     start = time.time()
     # 继续执行剩余的代码
     pyautogui.click(386, 939)  # 点击5号场地
-    while run_loading():  # 加载中
+    time.sleep(0.2)  # 等待一下,要不然有可能连‘加载中’都还没显示出来
+    while run_loading():  # 加载中，检测‘暂无数据’
         continue
-    # 使用cv2识别是否处于等待响应状态(这个到底可不可以优化？)
+    # 使用cv2识别是否处于等待响应状态(这个到底可不可以优化？2024/12/19回答：不能优化，因为不解决等待框，下面点击球场的动作无法实现且会被屏蔽，
+    # 点击会变成无效点击，导致乱序，第一个抢场操作就会失败，但不会影响第二次迭代的抢场)
     while run2():
         continue
     # time.sleep(1.5)  # 等待一下，这里必须考虑来自服务器的延迟(这个到底可不可以优化？)
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
-    while run_loading():  # 加载中
+    time.sleep(0.1)  # 等待一下，要不然有可能连‘加载中’都还没显示出来
+    while run_loading():  # 加载中，检测‘暂无数据’
         continue
     if run_fault():  # 回退过多
         pyautogui.click(659, 708)  # 点击润扬羽毛球场
 
     if iter == 0:
+        # pyautogui.click(354, 1497)  # 点击9号场地,仅周四用
         pyautogui.click(309, 302)  # 点击1号场地
     elif iter == 1:
         pyautogui.click(354, 1360)  # 点击7号场地
@@ -34,7 +42,7 @@ def perform_task(have, iter):
     elif iter == 2:
         pyautogui.click(395, 515)  # 点击2号场地
     elif iter == 3:
-        pyautogui.click(351, 742)  # 点击3号场地
+        pyautogui.click(354, 1497)  # 点击9号场地
 
     # 使用cv2识别是否处于等待响应状态
     while run_loading():  # 加载中
@@ -101,6 +109,12 @@ def perform_task(have, iter):
         have.append(14)
         have.append(15)
         have.append(16)
+    elif (detection_results[12] and detection_results[13]) and (
+            12 not in have and 13 not in have): # 14-15一小时，仅周四用
+        pyautogui.click(642, 722)  # 14-14:30
+        pyautogui.click(905, 721)  # 14:30-15
+        have.append(12)
+        have.append(13)
     elif (detection_results[3] and detection_results[6]) and (
             3 not in have and 4 not in have and 5 not in have and 6 not in have):
         pyautogui.click(900, 622)  # 9:30-10
@@ -130,6 +144,7 @@ def perform_task(have, iter):
         have.append(1)
         have.append(2)
         have.append(3)
+
     elif (detection_results[0] and detection_results[1]) and (
             0 not in have and 1 not in have):  # 啥也没剩，我打早八
         pyautogui.click(146, 624)  # 8-8:30
@@ -138,6 +153,7 @@ def perform_task(have, iter):
         have.append(1)
 
     else:  # 完全没场地了，或者没落进任何规则当中，执行一步后退操作
+        # 可以再设计一个从22点往前找是否存在一个连续一小时的没在have里的场，如果有就订
         pyautogui.click(29, 83)  # 点击系统浏览器回退键
         # pyautogui.click(29, 83)  # 测试fault，正常运行要删掉
         while run_loading():  # 加载中
@@ -168,7 +184,7 @@ def perform_task(have, iter):
 
 
 if __name__ == "__main__":
-    set_time = datetime.datetime.strptime("2024-12-12 11:37:40", "%Y-%m-%d %H:%M:%S")
+    set_time = datetime.datetime.strptime("2024-12-21 20:00:01", "%Y-%m-%d %H:%M:%S")
     time_difference = (set_time - datetime.datetime.now()).total_seconds()
     while time_difference > 0:
         if time_difference > 10:
