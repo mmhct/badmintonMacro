@@ -178,7 +178,7 @@ def perform_task(have, iter):
         continue
     time.sleep(0.1)
     if run_scan_fail():  # 预约失败
-        have=pre_have
+        have = pre_have
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
     pyautogui.click(29, 83)  # 点击系统浏览器回退键,要点两次，因为点一次是回退到场地界面，再点一次是回退到主界面
     while run_loading():  # 加载中
