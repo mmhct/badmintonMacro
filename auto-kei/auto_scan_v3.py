@@ -1,4 +1,4 @@
-'''简化了时间选择操作'''
+'''可以自动识别可抢的时间，并根据自定义优先顺序抢场'''
 import datetime
 
 import pyautogui
@@ -10,10 +10,10 @@ def perform_task():
     start = time.time()
     # 继续执行剩余的代码
     pyautogui.click(386, 939)  # 点击5号场地
-    time.sleep(1)  # 等待一下，这里必须考虑来自服务器的延迟
+    #time.sleep(1.5)  # 等待一下，这里必须考虑来自服务器的延迟
     pyautogui.click(29, 83)  # 点击系统浏览器回退键
     pyautogui.click(309, 302)  # 点击1号场地
-    time.sleep(1)  # 等待一下,这里必须考虑来自服务器的延迟，保险起见设置>3秒
+    time.sleep(1.5)  # 等待一下,这里必须考虑来自服务器的延迟，保险起见设置>3秒
     pyautogui.click(2239, 518)  # 点击日期框
     pyautogui.click(1284, 1409)  # 这个是选择下一个月份，如果遇到月份更替就要做这个操作，如果没有更替做这个也没事
     # 这个月份功能还没测试，不知道是否能用，因为选择月份之后可能会有些系统延迟，需要等待一下，等月份更替的时候进行测试
@@ -29,7 +29,7 @@ def perform_task():
 
     '''下面这部分就是抢实际的场了，程序会自动识别可抢的场地，并按照自定义优先规则进行选择'''
     # TODO: 根据position.txt里的坐标进行修改
-    time.sleep(0.18)  # 等待一下
+    time.sleep(0.18)  # 等待一下,如果这里还要强行优化，那就识别蒙上一层黑雾的图片
     detection_results = run()
     detection_results = {key: not value for key, value in detection_results.items()}
     if detection_results[14] and detection_results[17]:

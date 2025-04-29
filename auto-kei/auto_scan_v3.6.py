@@ -5,7 +5,7 @@ import datetime
 import pyautogui
 import time
 from auto_scan import run
-from scan_wait import run2
+from scan.scan_wait import run2
 
 
 def perform_task(have, iter):
@@ -148,7 +148,7 @@ def perform_task(have, iter):
 
 
 if __name__ == "__main__":
-    set_time = datetime.datetime.strptime("2024-12-10 20:00:01", "%Y-%m-%d %H:%M:%S")
+    set_time = datetime.datetime.strptime("2024-12-11 11:39:40", "%Y-%m-%d %H:%M:%S")
     time_difference = (set_time - datetime.datetime.now()).total_seconds()
     while time_difference > 0:
         if time_difference > 10:

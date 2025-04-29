@@ -2,6 +2,7 @@
 '''2024/12/20 该版本实际测试成功 
 All you need to do is to open the Wecom, set your favorite choices and time, run this script, 
 and it will automatically scan the badminton courts for you.
+2024/12/24 该版本抢不过脚本周二的下午2号场
 '''
 
 import datetime
@@ -9,10 +10,10 @@ import datetime
 import pyautogui
 import time
 from auto_scan_laptop import run_lap
-from scan_wait import run2
-from scan_back_fault import run_back_fault
-from scan_loading import run_loading
-from scan_fail import run_scan_fail
+from scan.scan_wait import run2
+from scan.scan_back_fault import run_back_fault
+from scan.scan_loading import run_loading
+from scan.scan_fail import run_scan_fail
 
 
 def perform_task(have, iter):
@@ -38,10 +39,12 @@ def perform_task(have, iter):
     if iter == 0:
         # pyautogui.click(354, 1497)  # 点击9号场地,仅周四用
         pyautogui.click(309, 302)  # 点击1号场地
+        # pyautogui.click(395, 515)  # 点击2号场地
     elif iter == 1:
         pyautogui.click(354, 1360)  # 点击7号场地
         # pyautogui.click(395, 515)  # 点击2号场地
     elif iter == 2:
+        # pyautogui.click(309, 302)  # 点击1号场地
         pyautogui.click(395, 515)  # 点击2号场地
     elif iter == 3:
         pyautogui.click(354, 1497)  # 点击9号场地
@@ -51,13 +54,14 @@ def perform_task(have, iter):
         continue
     while run2():
         continue
-    time.sleep(0.2)
+    time.sleep(0.2)  # 可考虑减小的优化空间
     pyautogui.click(2239, 518)  # 点击日期框
-    pyautogui.click(1284, 1409)  # 这个是选择下一个月份，如果遇到月份更替就要做这个操作，如果没有更替做这个也没事
+    time.sleep(0.15)  # 等待一下
+    # pyautogui.click(1284, 1409)  # 这个是选择下一个月份，如果遇到月份更替就要做这个操作，如果没有更替做这个也没事
+    pyautogui.click(429, 1409)  # 这个是选择下一个年份，如果遇到年份更替就要做这个操作，如果没有更替做这个也没事
+    time.sleep(0.15)  # 等待一下,如果没有月份或年份更替就不用等待
     # 这个月份功能还没测试，不知道是否能用，因为选择月份之后可能会有些系统延迟，需要等待一下，等月份更替的时候进行测试
     pyautogui.click(2141, 1409)  # 点击日期栏，其实执行的是选择之后的日期，一般手抢是下滑选择日期
-    pyautogui.click(2141, 1409)
-    pyautogui.click(2141, 1409)
     pyautogui.click(2141, 1409)
     pyautogui.click(2141, 1409)
     pyautogui.click(2141, 1409)
@@ -71,6 +75,7 @@ def perform_task(have, iter):
     time.sleep(0.25)  # 等待一下,如果这里还要强行优化，那就识别蒙上一层黑雾的图片
     detection_results = run_lap()
     detection_results = {key: not value for key, value in detection_results.items()}
+    # TODO:晚场可以优化，iter=0时可抢
     if (detection_results[14] and detection_results[17]) and (
             14 not in have and 15 not in have and 16 not in have and 17 not in have):
         pyautogui.click(1163, 715)  # 15-15:30
@@ -111,12 +116,12 @@ def perform_task(have, iter):
         have.append(14)
         have.append(15)
         have.append(16)
-    elif (detection_results[12] and detection_results[13]) and (
-            12 not in have and 13 not in have):  # 14-15一小时，仅周四用
-        pyautogui.click(642, 722)  # 14-14:30
-        pyautogui.click(905, 721)  # 14:30-15
-        have.append(12)
-        have.append(13)
+    # elif (detection_results[12] and detection_results[13]) and (
+    #         12 not in have and 13 not in have):  # 14-15一小时，仅周四用
+    #     pyautogui.click(642, 722)  # 14-14:30
+    #     pyautogui.click(905, 721)  # 14:30-15
+    #     have.append(12)
+    #     have.append(13)
     elif (detection_results[3] and detection_results[6]) and (
             3 not in have and 4 not in have and 5 not in have and 6 not in have):
         pyautogui.click(900, 622)  # 9:30-10
@@ -136,8 +141,21 @@ def perform_task(have, iter):
         have.append(5)
     # pyautogui.click(133, 624)  # 8-8:30
     # pyautogui.click(900, 622)  # 9:30-10
-    # pyautogui.click(1155, 624)  # 10-10:30
-    # pyautogui.click(1925, 624)  # 11:30-12
+    elif (detection_results[4] and detection_results[7]) and (
+            4 not in have and 5 not in have and 6 not in have and 7 not in have):
+        pyautogui.click(1155, 624)  # 10-10:30
+        pyautogui.click(1925, 624)  # 11:30-12
+        have.append(4)
+        have.append(5)
+        have.append(6)
+        have.append(7)
+    elif (detection_results[1] and detection_results[4]) and (
+            1 not in have and 2 not in have and 3 not in have and 4 not in have):
+        pyautogui.click(1421, 618)  # 10:30-11
+        pyautogui.click(1925, 624)  # 11:30-12
+        have.append(5)
+        have.append(6)
+        have.append(7)
     elif (detection_results[0] and detection_results[3]) and (
             0 not in have and 1 not in have and 2 not in have and 3 not in have):  # 啥也没剩，我打早八
         pyautogui.click(146, 624)  # 8-8:30
@@ -189,7 +207,7 @@ def perform_task(have, iter):
 
 
 if __name__ == "__main__":
-    set_time = datetime.datetime.strptime("2024-12-21 20:00:01", "%Y-%m-%d %H:%M:%S")
+    set_time = datetime.datetime.strptime("2024-12-31 20:00:00", "%Y-%m-%d %H:%M:%S")
     time_difference = (set_time - datetime.datetime.now()).total_seconds()
     while time_difference > 0:
         if time_difference > 10:
@@ -198,5 +216,6 @@ if __name__ == "__main__":
             time.sleep(0.1)
         time_difference = (set_time - datetime.datetime.now()).total_seconds()
     have = []
+    time.sleep(0.1)  # 等待一下
     for i in range(4):
         have = perform_task(have, i)  # 执行任务

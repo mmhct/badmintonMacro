@@ -5,11 +5,11 @@ import datetime
 import pyautogui
 import time
 from auto_scan_laptop import run_lap
-from scan_wait import run2
-from scan_back_fault import run_back_fault
-from scan_loading import run_loading
-from scan_fail import run_scan_fail
-from scan_if_still_verifying import run_if_still_verifying
+from scan.scan_wait import run2
+from scan.scan_back_fault import run_back_fault
+from scan.scan_loading import run_loading
+from scan.scan_fail import run_scan_fail
+from scan.scan_if_still_verifying import run_if_still_verifying
 
 
 def perform_task(have, iter):

@@ -5,7 +5,7 @@ import datetime
 import pyautogui
 import time
 from auto_scan_laptop import run_lap
-from scan_wait import run2
+from scan.scan_wait import run2
 
 
 def perform_task(have, iter):

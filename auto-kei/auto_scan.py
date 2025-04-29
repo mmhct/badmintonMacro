@@ -1,12 +1,7 @@
-import time
-
+"""基础方法汇总文件，所有auto_scan系列的文件都会用到的方法都在这里"""
 import cv2
 import numpy as np
 from PIL import ImageGrab
-import pyautogui
-import keyboard
-import threading
-import time
 
 
 def screen_capture():
@@ -52,9 +47,9 @@ def split_image(image):
     blocks[25] = image[791:846, 1817:2031]  # 20:30-21:00
     blocks[26] = image[791:846, 2079:2291]  # 21:00-21:30
     blocks[27] = image[888:943, 40:254]  # 21:30-22:00
-    # for i in range(28):
-    #     cv2.imshow(f"block{i}", blocks[i])
-    #     cv2.waitKey(0)
+    for i in range(28):
+        cv2.imshow(f"block{i}", blocks[i])
+        cv2.waitKey(0)
     return blocks
 
 
@@ -72,7 +67,7 @@ def detect_color(block, target_color, threshold=10):
 
 
 def run():
-    start = time.time()
+    # start = time.time()
     screen = screen_capture()
     # 将屏幕截图分成约场时间的块
     blocks = split_image(screen)
@@ -82,7 +77,8 @@ def run():
     detection_results = {}
     for block_id, block in blocks.items():
         detection_results[block_id] = detect_color(block, target_color)
-    print(detection_results)
-    end = time.time()
-    print(f"Time elapsed: {end - start}")
+    # print(detection_results)
+    # end = time.time()
+    # print(f"Time elapsed: {end - start}")
     return detection_results
+

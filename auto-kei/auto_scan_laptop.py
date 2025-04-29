@@ -69,7 +69,7 @@ def detect_color(block, target_color, threshold=10):
 
 
 def run_lap():
-    start = time.time()
+    # start = time.time()
     screen = screen_capture()
     # 将屏幕截图分成约场时间的块
     blocks = split_image(screen)
@@ -79,9 +79,8 @@ def run_lap():
     detection_results = {}
     for block_id, block in blocks.items():
         detection_results[block_id] = detect_color(block, target_color)
-    print(detection_results)
-    end = time.time()
-    print(f"Time elapsed: {end - start}")
+    # print(detection_results)
+    # end = time.time()
+    # print(f"Time elapsed: {end - start}")
     return detection_results
 
-run_lap()
